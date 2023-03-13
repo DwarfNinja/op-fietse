@@ -1,0 +1,20 @@
+{
+  "name": "myapp",
+  "version": "0.0.1",
+  "author": "my-element",
+  "main": "index.js",
+  "module": "index.js",
+  "scripts": {
+    "start": "web-dev-server --open --node-resolve",
+    "start:watch": "web-dev-server --open --node-resolve --watch"
+  },
+  "dependencies": {
+    "lit": "^2.6.1",
+    "lit-element": "^3.2.2"
+  },
+  "devDependencies": {
+    "@web/dev-server": "^0.1.35",
+    "@web/test-runner": "^0.15.0"
+  }
+}
+
