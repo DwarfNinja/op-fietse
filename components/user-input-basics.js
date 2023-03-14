@@ -1,9 +1,8 @@
 import { LitElement, html, css } from 'lit';
 
-export class userInputBasics extends LitElement{
-
-    static get styles(){
-        return css`
+export class userInputBasics extends LitElement {
+  static get styles() {
+    return css`
           .input-container {
             display: flex;
             flex-direction: column;
@@ -14,14 +13,10 @@ export class userInputBasics extends LitElement{
             padding: 0.1rem;
           }
         `;
-    }
+  }
 
-    constructor(){
-        super();
-    }
-
-    render() {
-        return html`
+  render() {
+    return html`
             <div class="input-container">
                 <label aria-label="username-input">Naam:</label>
                 <input class="input-field" placeholder="Naam" required>
@@ -35,7 +30,7 @@ export class userInputBasics extends LitElement{
                 <input class="input-field" placeholder="Telefoon Nummer" required>
             </div>
         `;
-    }
+  }
 }
 
 customElements.define('user-input-basics', userInputBasics);

@@ -1,12 +1,11 @@
 import { LitElement, html, css } from 'lit';
-import '/components/user-input-basics.js';
-import '/components/datetime-fields.js';
-import '/components/task-description.js';
+import '../components/user-input-basics';
+import '../components/datetime-fields';
+import '../components/task-description';
 
-export class repairCard extends LitElement{
-
-    static get styles(){
-        return css`
+class repairCard extends LitElement {
+  static get styles() {
+    return css`
           #center-container {
             display: flex;
             flex-direction: column;
@@ -31,19 +30,15 @@ export class repairCard extends LitElement{
             border: 1px solid black;
           }
         `;
-    }
+  }
 
-    constructor(){
-        super();
-    }
+  printRepairCard() {
+    this.window.print();
+  }
 
-    printRepairCard() {
-        window.print();
-    }
-
-    render() {
-        return html`
-            <button @click="${this.printRepairCard}">Afdrukken</button>
+  render() {
+    return html`
+            <button @click="${(this.printRepairCard)}">Afdrukken</button>
             <div id="center-container">
                 <h1>Incheck Reperatie</h1>
                 <form id="repairCardForm">
@@ -57,7 +52,7 @@ export class repairCard extends LitElement{
                 <div class="write-box"></div>
             </div>
         `;
-    }
+  }
 }
 
 customElements.define('repair-card', repairCard);
