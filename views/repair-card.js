@@ -3,6 +3,7 @@ import { css, html, LitElement } from 'lit';
 import '../components/user-input-basics';
 import '../components/datetime-fields';
 import '../components/task-description';
+import '../components/time-indication';
 import { RepairCardController } from '../controllers/repair-card-controller';
 
 class repairCard extends LitElement {
@@ -53,6 +54,8 @@ class repairCard extends LitElement {
         basics: Object,
         datetime: Object,
         description: String,
+        timeIndication: Number,
+        status: String,
       },
       printing: Boolean,
     };
@@ -72,6 +75,7 @@ class repairCard extends LitElement {
         time: '',
       },
       description: '',
+      timeIndication: 0,
       status: 'Te Doen',
     };
 
@@ -87,6 +91,7 @@ class repairCard extends LitElement {
         <form id="repairCardForm">
           <user-input-basics @user-input-basics-changed="${(event) => { this.repair.basics = event.detail; }}"></user-input-basics>
           <datetime-fields @date-time-changed="${(event) => { this.repair.datetime = event.detail; }}"></datetime-fields>
+          <time-indication @time-indication-changed="${(event) => { this.repair.timeIndication = event.detail; }}"></time-indication>
           <task-description @user-input-basics-changed="${(event) => { this.repair.description = event.detail; }}"></task-description>
         </form>
         <div id="button-container" class="hide-on-print">
