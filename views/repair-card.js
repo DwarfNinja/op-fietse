@@ -1,10 +1,9 @@
 import { css, html, LitElement } from 'lit';
 
-import { StorageService } from '../services/storage-service';
 import '../components/user-input-basics';
 import '../components/datetime-fields';
 import '../components/task-description';
-import {storageService} from "../services";
+import { storageService } from '../services';
 
 class repairCard extends LitElement {
   static get styles() {
@@ -19,23 +18,29 @@ class repairCard extends LitElement {
         min-height: 100vh;
       }
 
-      #button-container {
-        position:absolute;
-        display: flex;
-        flex-direction: column;
-        top:0;
-        right:0;
-      }
-
       button {
         margin: 2rem;
         padding: 1rem 2rem;
       }
 
       .write-box {
-        width: 500px;
-        height: 300px;
+        width: 400px;
+        height: 250px;
         border: 1px solid black;
+      }
+
+      .show-on-print {
+        display: none;
+      }
+      
+      @media print {
+        .hide-on-print {
+          display: none !important;
+        }
+
+        .show-on-print {
+          display: block !important;
+        }
       }
     `;
   }
@@ -47,6 +52,7 @@ class repairCard extends LitElement {
         datetime: Object,
         description: String,
       },
+      printing: Boolean,
     };
   }
 
@@ -66,6 +72,10 @@ class repairCard extends LitElement {
       description: '',
       status: 'Te Doen',
     };
+
+    window.addEventListener('afterprint', () => {
+      this.printing = false;
+    });
   }
 
   addRepairCard() {
@@ -93,11 +103,6 @@ class repairCard extends LitElement {
 
   render() {
     return html`
-      <div id="button-container">
-        <button @click="${() => window.location.assign('../../index.html')}">Dashboard</button>
-        <button @click="${this.addRepairCard}">Toevoegen</button>
-        <button @click="${(this.printRepairCard)}">Afdrukken</button>
-      </div>
       <div id="center-container">
         <h1>Incheck Reparatie ID ${this.repair.id}</h1>
         <form id="repairCardForm">
@@ -105,10 +110,17 @@ class repairCard extends LitElement {
           <datetime-fields @date-time-changed="${(event) => { this.repair.datetime = event.detail; }}"></datetime-fields>
           <task-description @user-input-basics-changed="${(event) => { this.repair.description = event.detail; }}"></task-description>
         </form>
-        <h1>Uitvoering Reparatie</h1>
-        <div class="write-box"></div>
-        <h1>Afronding Reparatie</h1>
-        <div class="write-box"></div>
+        <div id="button-container" class="hide-on-print">
+          <button @click="${() => window.location.assign('../../index.html')}">Dashboard</button>
+          <button @click="${this.addRepairCard}">Toevoegen</button>
+          <button @click="${(this.printRepairCard)}">Afdrukken</button>
+        </div>
+        <div class="show-on-print">
+          <h1>Uitvoering Reparatie</h1>
+          <div class="write-box"></div>
+          <h1>Afronding Reparatie</h1>
+          <div class="write-box"></div>
+        </div>
       </div>
     `;
   }
