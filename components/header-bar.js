@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { storageService } from '../services';
+import {storageService, utilsService} from '../services';
 
 export class HeaderBar extends LitElement {
   static get styles() {
@@ -27,14 +27,7 @@ export class HeaderBar extends LitElement {
     this.repairList = storageService.getRepairsFromLocalStorage();
     let minutes = 0;
     this.repairList.forEach((repair) => { minutes += parseInt(repair.timeIndication, 10); });
-    this.totalTimeIndication = this.convertMinutesToTime(minutes);
-  }
-
-  convertMinutesToTime(minutes) {
-    const m = minutes % 60;
-    const h = (minutes - m) / 60;
-    const HHMM = `${(h < 10 ? '0' : '') + h.toString()}:${m < 10 ? '0' : ''}${m.toString()}`;
-    return HHMM;
+    this.totalTimeIndication = utilsService.convertMinutesToTime(minutes);
   }
 
   render() {

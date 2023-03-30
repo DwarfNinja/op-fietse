@@ -1,4 +1,4 @@
-import { storageService } from '../services';
+import { storageService, utilsService } from '../services';
 
 export class RepairCardController {
   host;
@@ -19,12 +19,7 @@ export class RepairCardController {
     repairList.forEach((repair) => {
       ids.push(repair.id);
     });
-    return this.generateRandom(0, 999, ids);
-  }
-
-  generateRandom(min, max, except) {
-    const num = Math.floor(Math.random() * (max - min + 1)) + min;
-    return except.includes(num) ? this.generateRandom(min, max) : num;
+    return utilsService.generateRandom(0, 999, ids);
   }
 
   printRepairCard() {
