@@ -1,6 +1,7 @@
-import { css, html, LitElement, nothing } from 'lit';
-
-import { storageService } from '../services';
+import {
+  css, html, LitElement, nothing,
+} from 'lit';
+import { DashboardController } from '../controllers/dashboard-controller';
 
 export class Dashboard extends LitElement {
   static get styles() {
@@ -81,12 +82,7 @@ export class Dashboard extends LitElement {
     `;
   }
 
-  Status = {
-    TeDoen: 'Te Doen',
-    InBehandeling: 'In Behandeling',
-    Voltooid: 'Voltooid',
-    Betaald: 'Betaald',
-  };
+  dashboardController = new DashboardController(this);
 
   static get properties() {
     return {
@@ -96,64 +92,7 @@ export class Dashboard extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.repairList = storageService.getRepairsFromLocalStorage()
-      .sort((a, b) => a.id > b.id);
-  }
-
-  changeRepairStatus(repair, status) {
-    const newRepair = repair;
-    newRepair.status = status;
-    storageService.replaceRepair(repair);
-    this.updateRepairList();
-  }
-
-  finishRepair(repair) {
-    storageService.deleteRepairInLocalStorage(repair);
-    this.updateRepairList();
-  }
-
-  updateRepairList() {
-    this.repairList = storageService.getRepairsFromLocalStorage()
-      .sort((a, b) => a.id > b.id);
-    this.requestUpdate();
-  }
-
-  getButton(repair) {
-    switch (repair.status) {
-      case this.Status.InBehandeling:
-        return html`<td><button @click="${() => this.changeRepairStatus(repair, this.Status.Voltooid)}" style="width: 6rem">Voltooi</button></td>`;
-      case this.Status.Voltooid:
-        return html`<td><button @click="${() => this.finishRepair(repair)}" style="width: 6rem">Betaald</button></td>`;
-      default:
-        return html`<td><button @click="${() => this.changeRepairStatus(repair, this.Status.InBehandeling)}" style="width: 6rem">Start</button></td>`;
-    }
-  }
-
-  getFilteredTable(filter) {
-    return this.repairList.filter((repair) => repair.status === filter);
-  }
-
-  searchFilterTable(event) {
-    const filter = event.target.value.toUpperCase();
-    const table = this.shadowRoot.getElementById('product-table-body');
-    const tr = table.getElementsByTagName('tr');
-    let found;
-
-    for (let i = 0; i < tr.length; i++) {
-      const td = tr[i].getElementsByTagName('td');
-      for (let j = 0; j < td.length; j++) {
-        const txtValue = td[j].textContent || td[j].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          found = true;
-        }
-      }
-      if (found) {
-        tr[i].style.display = '';
-        found = false;
-      } else {
-        tr[i].style.display = 'none';
-      }
-    }
+    this.dashboardController.updateRepairList();
   }
 
   render() {
@@ -161,7 +100,7 @@ export class Dashboard extends LitElement {
       <div id="center-container">
         <div style="max-width: min-content">
           <div style="margin-bottom: 2.5rem">
-            <input style="float: left" type="text" id="search-input" aria-label="tabel filter textveld" @input=${(event) => this.searchFilterTable(event)} placeholder="Zoeken">
+            <input style="float: left" type="text" id="search-input" aria-label="tabel filter textveld" @input=${(event) => this.dashboardController.searchFilterTable(event)} placeholder="Zoeken">
             <button aria-label="reparatiekaart aanmaken" @click="${() => window.location.assign('../views/repair-card.html')}">Reparatiekaart Aanmaken</button>
           </div>
           <table id="product-table" aria-label="product tabel">
@@ -176,42 +115,44 @@ export class Dashboard extends LitElement {
             </tr>
             </thead>
             <tr class="group-label"><th colspan="6">Te Doen</th></tr>
-            <tbody id="product-table-body" aria-label="product tabel body">
-            ${this.repairList ? this.getFilteredTable(this.Status.TeDoen).map((repair) => html`
+            <tbody class="product-table-body" aria-label="product tabel body">
+            ${this.repairList ? this.dashboardController.getFilteredTable(this.dashboardController.Status.TeDoen).map((repair) => html`
               <tr>
                 <td aria-label="product id ${repair.id}">${repair.id}</td>
                 <td aria-label="product naam ${repair.basics.name}">${repair.basics.name}</td>
                 <td aria-label="product datum ${repair.datetime.date}">${repair.datetime.date}</td>
                 <td aria-label="product tijd ${repair.datetime.time}">${repair.datetime.time}</td>
                 <td aria-label="product status ${repair.status}">${repair.status}</td>
-                ${this.getButton(repair)}
+                ${this.dashboardController.getButton(repair)}
               </tr>
             `) : nothing}
             </tbody>
             <tr class="group-label"><th colspan="6">In Behandeling</th></tr>
-            <tbody id="product-table-body" aria-label="product tabel body">
-            ${this.repairList ? this.getFilteredTable(this.Status.InBehandeling).map((repair) => html`
+            <tbody class="product-table-body" aria-label="product tabel body">
+            ${this.repairList ? this.dashboardController.getFilteredTable(this.dashboardController.Status.InBehandeling).map((repair) => html`
               <tr>
                 <td aria-label="product id ${repair.id}">${repair.id}</td>
                 <td aria-label="product naam ${repair.basics.name}">${repair.basics.name}</td>
                 <td aria-label="product datum ${repair.datetime.date}">${repair.datetime.date}</td>
                 <td aria-label="product tijd ${repair.datetime.time}">${repair.datetime.time}</td>
                 <td aria-label="product status ${repair.status}">${repair.status}</td>
-                ${this.getButton(repair)}
+                ${this.dashboardController.getButton(repair)}
               </tr>
             `) : nothing}
             </tbody>
             <tr class="group-label"><th colspan="6">Voltooid</th></tr>
-            ${this.repairList ? this.getFilteredTable(this.Status.Voltooid).map((repair) => html`
+            <tbody class="product-table-body" aria-label="product tabel body">
+            ${this.repairList ? this.dashboardController.getFilteredTable(this.dashboardController.Status.Voltooid).map((repair) => html`
               <tr>
                 <td aria-label="product id ${repair.id}">${repair.id}</td>
                 <td aria-label="product naam ${repair.basics.name}">${repair.basics.name}</td>
                 <td aria-label="product datum ${repair.datetime.date}">${repair.datetime.date}</td>
                 <td aria-label="product tijd ${repair.datetime.time}">${repair.datetime.time}</td>
                 <td aria-label="product status ${repair.status}">${repair.status}</td>
-                ${this.getButton(repair)}
+                ${this.dashboardController.getButton(repair)}
               </tr>
             `) : nothing}
+            </tbody>
           </table>
         </div>
       </div>
