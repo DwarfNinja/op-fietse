@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { DateTimeController } from '../controllers/datetime-controller';
 
 export class DateTimeFields extends LitElement {
   static get styles() {
@@ -15,6 +16,8 @@ export class DateTimeFields extends LitElement {
     `;
   }
 
+  datetimeController = new DateTimeController(this);
+
   static get properties() {
     return {
       date: String,
@@ -22,27 +25,9 @@ export class DateTimeFields extends LitElement {
     };
   }
 
-  constructor() {
-    super();
-    this.setDateTime();
-  }
-
-  updated(_changedProperties) {
-    super.updated(_changedProperties);
-    this.setDateTime();
-  }
-
-  setDateTime() {
-    this.date = new Date().toLocaleDateString().toString().replaceAll('/', '-');
-    this.setTime();
-    this.dispatchEvent(new CustomEvent('date-time-changed', {
-      detail: { date: this.date, time: this.time },
-    }));
-  }
-
-  setTime() {
-    this.time = new Date().toLocaleTimeString().substring(0, 5);
-    setTimeout(() => this.setTime(), 1000);
+  connectedCallback() {
+    super.connectedCallback();
+    this.datetimeController.setDateTime();
   }
 
   render() {

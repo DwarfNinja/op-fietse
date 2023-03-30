@@ -3,7 +3,7 @@ import { css, html, LitElement } from 'lit';
 import '../components/user-input-basics';
 import '../components/datetime-fields';
 import '../components/task-description';
-import { storageService } from '../services';
+import { RepairCardController } from '../controllers/repair-card-controller';
 
 class repairCard extends LitElement {
   static get styles() {
@@ -45,6 +45,8 @@ class repairCard extends LitElement {
     `;
   }
 
+  repairCardController = new RepairCardController(this);
+
   static get properties() {
     return {
       repair: {
@@ -59,7 +61,7 @@ class repairCard extends LitElement {
   constructor() {
     super();
     this.repair = {
-      id: this.getNewId(),
+      id: this.repairCardController.getNewId(),
       basics: {
         name: '',
         emailadres: '',
@@ -78,29 +80,6 @@ class repairCard extends LitElement {
     });
   }
 
-  addRepairCard() {
-    storageService.setRepairInLocalStorage(this.repair);
-    window.location.assign('../../index.html');
-  }
-
-  getNewId() {
-    const ids = [];
-    const repairList = storageService.getRepairsFromLocalStorage();
-    repairList.forEach((repair) => {
-      ids.push(repair.id);
-    });
-    return this.generateRandom(0, 999, ids);
-  }
-
-  generateRandom(min, max, except) {
-    const num = Math.floor(Math.random() * (max - min + 1)) + min;
-    return except.includes(num) ? this.generateRandom(min, max) : num;
-  }
-
-  printRepairCard() {
-    window.print();
-  }
-
   render() {
     return html`
       <div id="center-container">
@@ -112,8 +91,8 @@ class repairCard extends LitElement {
         </form>
         <div id="button-container" class="hide-on-print">
           <button @click="${() => window.location.assign('../../index.html')}">Dashboard</button>
-          <button @click="${this.addRepairCard}">Toevoegen</button>
-          <button @click="${(this.printRepairCard)}">Afdrukken</button>
+          <button @click="${this.repairCardController.addRepairCard}">Toevoegen</button>
+          <button @click="${(this.repairCardController.printRepairCard)}">Afdrukken</button>
         </div>
         <div class="show-on-print">
           <h1>Uitvoering Reparatie</h1>
