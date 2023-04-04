@@ -17,8 +17,11 @@ export class DashboardController {
   }
 
   changeRepairStatus(repair, status) {
-    const newRepair = repair;
-    newRepair.status = status;
+    const changedRepair = repair;
+    changedRepair.status = status;
+    if (status === this.Status.Voltooid) {
+      changedRepair.datetimecompleted = { date: new Date().toLocaleDateString().toString().replaceAll('/', '-'), time: new Date().toLocaleTimeString().substring(0, 5) };
+    }
     storageService.replaceRepair(repair);
     this.updateRepairList();
   }

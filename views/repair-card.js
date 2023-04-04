@@ -52,7 +52,7 @@ class repairCard extends LitElement {
     return {
       repair: {
         basics: Object,
-        datetime: Object,
+        datetimecreated: Object,
         description: String,
         timeIndication: Number,
         status: String,
@@ -70,7 +70,15 @@ class repairCard extends LitElement {
         emailadres: '',
         phonenumber: '',
       },
-      datetime: {
+      datetimecreated: {
+        date: '',
+        time: '',
+      },
+      datetimestarted: {
+        date: '',
+        time: '',
+      },
+      datetimecompleted: {
         date: '',
         time: '',
       },
@@ -90,7 +98,7 @@ class repairCard extends LitElement {
         <h1>Incheck Reparatie ID ${this.repair.id}</h1>
         <form id="repairCardForm">
           <user-input-basics @user-input-basics-changed="${(event) => { this.repair.basics = event.detail; }}"></user-input-basics>
-          <datetime-fields @date-time-changed="${(event) => { this.repair.datetime = event.detail; }}"></datetime-fields>
+          <datetime-fields @datetime-created-changed="${(event) => { this.repair.datetimecreated = event.detail; }}"></datetime-fields>
           <time-indication @time-indication-changed="${(event) => { this.repair.timeIndication = event.detail; }}"></time-indication>
           <task-description @user-input-basics-changed="${(event) => { this.repair.description = event.detail; }}"></task-description>
         </form>

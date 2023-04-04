@@ -9,7 +9,7 @@ export class DateTimeController {
   setDateTime() {
     this.host.date = new Date().toLocaleDateString().toString().replaceAll('/', '-');
     this.setTime();
-    this.host.dispatchEvent(new CustomEvent('date-time-changed', {
+    this.host.dispatchEvent(new CustomEvent('datetime-created-changed', {
       detail: { date: this.host.date, time: this.host.time },
     }));
   }
