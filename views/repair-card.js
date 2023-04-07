@@ -100,7 +100,7 @@ class repairCard extends LitElement {
           <user-input-basics @user-input-basics-changed="${(event) => { this.repair.basics = event.detail; }}"></user-input-basics>
           <datetime-fields @datetime-created-changed="${(event) => { this.repair.datetimecreated = event.detail; }}"></datetime-fields>
           <time-indication @time-indication-changed="${(event) => { this.repair.timeIndication = event.detail; }}"></time-indication>
-          <task-description @user-input-basics-changed="${(event) => { this.repair.description = event.detail; }}"></task-description>
+          <task-description @description-changed="${(event) => { this.repair.description = event.detail; }}"></task-description>
         </form>
         <div id="button-container" class="hide-on-print">
           <button @click="${() => window.location.assign('../../index.html')}">Dashboard</button>
