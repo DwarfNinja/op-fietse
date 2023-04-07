@@ -1,5 +1,7 @@
 import { html } from 'lit';
 import { storageService } from '../services';
+import { setRepairList } from '../redux/actions';
+import store from '../redux/store';
 
 export class DashboardController {
   host;
@@ -43,8 +45,9 @@ export class DashboardController {
   }
 
   updateRepairList() {
-    this.host.repairList = storageService.getRepairsFromLocalStorage()
-      .sort((a, b) => a.id > b.id);
+    store.dispatch(setRepairList(
+      storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id),
+    ));
   }
 
   getButton(repair) {
