@@ -17,7 +17,7 @@ export class Dashboard extends LitElement {
 
           #search-input {
             padding: 0.4rem;
-            border: 2px solid cornflowerblue;
+            border: 2px solid royalblue;
             border-radius: 10px;
           }
 
@@ -26,7 +26,7 @@ export class Dashboard extends LitElement {
             margin: 0 0.5rem;
             padding: 0.5rem;
             color: white;
-            background-color: cornflowerblue;
+            background-color: royalblue;
             border: none;
             border-radius: 10px;
             font-weight: bold;
@@ -41,7 +41,7 @@ export class Dashboard extends LitElement {
           }
 
           .group-label {
-            background: cornflowerblue;
+            background: royalblue;
             color: white;
           }
 
@@ -55,10 +55,10 @@ export class Dashboard extends LitElement {
           }
 
           #repair-table thead tr {
-            background-color: cornflowerblue;
+            background-color: royalblue;
             color: white;
             text-align: left;
-            border-bottom: 3px solid royalblue;
+            border-bottom: 3px solid mediumblue;
           }
 
           #repair-table th,
@@ -77,7 +77,7 @@ export class Dashboard extends LitElement {
           }
 
           #repair-table tbody tr:last-of-type {
-            border-bottom: 2px solid cornflowerblue;
+            border-bottom: 2px solid royalblue;
           }
         `;
   }

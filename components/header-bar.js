@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import {storageService, utilsService} from '../services';
+import { storageService, utilsService } from '../services';
 
 export class HeaderBar extends LitElement {
   static get styles() {
@@ -8,8 +8,8 @@ export class HeaderBar extends LitElement {
         display: flex; 
         justify-content: center; 
         width: 100%; 
-        position: fixed; 
-        background-color: cornflowerblue; 
+        position: fixed;
+        background-color: royalblue; 
         font-family: sans-serif;
       }
     `;
@@ -34,8 +34,8 @@ export class HeaderBar extends LitElement {
     return html`
             <div id="header-bar">
                 <div>
-                    <h3>Totale tijdsindicatie reparaties:</h3>
-                    <h3 class="header-menu-item" style="margin: 2rem auto; padding: 0.5rem; justify-self: center; background-color: white; max-width: 5rem; border-radius: 20px; text-align: center;">${this.totalTimeIndication}</h3>
+                    <h3 style="color: white;">Totale tijdsindicatie reparaties:</h3>
+                    <h3 class="header-menu-item" style="margin: 2rem auto; padding: 0.5rem; justify-self: center; color: black; background-color: white; max-width: 5rem; border-radius: 20px; text-align: center;">${this.totalTimeIndication}</h3>
                 </div>
             </div>
     `;
