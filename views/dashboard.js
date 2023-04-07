@@ -2,6 +2,9 @@ import {
   css, html, LitElement, nothing,
 } from 'lit';
 import { DashboardController } from '../controllers/dashboard-controller';
+import store from '../redux/store';
+import { storageService } from '../services';
+import { setRepairList } from '../redux/actions';
 
 export class Dashboard extends LitElement {
   static get styles() {

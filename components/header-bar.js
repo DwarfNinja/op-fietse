@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import {storageService, utilsService} from '../services';
+import { storageService, utilsService } from '../services';
 
 export class HeaderBar extends LitElement {
   static get styles() {
