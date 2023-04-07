@@ -68,7 +68,7 @@ export class DashboardController {
 
   searchFilterTable(event) {
     const filter = event.target.value.toUpperCase();
-    const tables = this.host.shadowRoot.querySelectorAll('.product-table-body');
+    const tables = this.host.shadowRoot.querySelectorAll('.repair-table-body');
 
     tables.forEach((table) => {
       const tr = table.getElementsByTagName('tr');
