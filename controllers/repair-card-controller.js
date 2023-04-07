@@ -14,6 +14,10 @@ export class RepairCardController {
       alert('Het telefoon nummer is geen geldig nummer!');
       return false;
     }
+    if (Number.isNaN(repair.timeIndication)) {
+      alert('De tijds indicatie is geen geldige tijd in minuten!');
+      return false;
+    }
     if (repair.basics.name !== '' || repair.basics.emailadres !== ''
         || repair.basics.phonenumber !== '' || repair.timeIndication !== 0
         || repair.description !== '') {
