@@ -59,7 +59,11 @@ export class DashboardController {
   }
 
   getFilteredTable(filter) {
-    return this.host.repairList.filter((repair) => repair.status === filter);
+    const { repairList } = this.host;
+    if (repairList.length === 0) {
+      return repairList;
+    }
+    return repairList.filter((repair) => repair.status === filter);
   }
 
   searchFilterTable(event) {

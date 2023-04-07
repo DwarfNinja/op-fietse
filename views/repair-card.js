@@ -104,8 +104,8 @@ class repairCard extends LitElement {
         </form>
         <div id="button-container" class="hide-on-print">
           <button @click="${() => window.location.assign('../../index.html')}">Dashboard</button>
-          <button @click="${this.repairCardController.addRepairCard}">Toevoegen</button>
-          <button @click="${(this.repairCardController.printRepairCard)}">Afdrukken</button>
+          <button @click="${() => this.repairCardController.addRepairCard()}">Toevoegen</button>
+          <button @click="${() => this.repairCardController.printRepairCard()}">Afdrukken</button>
         </div>
         <div class="show-on-print">
           <h1>Uitvoering Reparatie</h1>

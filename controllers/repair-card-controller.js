@@ -8,9 +8,20 @@ export class RepairCardController {
     host.addController(this);
   }
 
+  fieldsAreVerified() {
+    const { repair } = this.host;
+    return (repair.basics.name !== '' || repair.basics.emailadres !== ''
+        || repair.basics.phonenumber !== '' || repair.timeIndication !== 0
+        || repair.description !== '');
+  }
+
   addRepairCard() {
-    storageService.setRepairInLocalStorage(this.repair);
-    window.location.assign('../../index.html');
+    if (this.fieldsAreVerified()) {
+      storageService.setRepairInLocalStorage(this.host.repair);
+      window.location.assign('../../index.html');
+    } else {
+      alert('Nog niet alle velden zijn ingevuld!');
+    }
   }
 
   getNewId() {
@@ -23,6 +34,10 @@ export class RepairCardController {
   }
 
   printRepairCard() {
-    window.print();
+    if (this.fieldsAreVerified()) {
+      window.print();
+    } else {
+      alert('Nog niet alle velden zijn ingevuld!');
+    }
   }
 }
