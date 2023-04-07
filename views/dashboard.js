@@ -99,13 +99,9 @@ export class Dashboard extends LitElement {
     return html`
         <div id="center-container">
             <div style="max-width: min-content">
-                <div style="margin-bottom: 2.5rem">
-                    <input style="float: left" type="text" id="search-input" aria-label="tabel filter textveld"
-                           @input=${(event) => this.dashboardController.searchFilterTable(event)} placeholder="Zoeken">
-                    <button aria-label="reparatiekaart aanmaken"
-                            @click="${() => window.location.assign('../views/repair-card.html')}">Reparatiekaart
-                        Aanmaken
-                    </button>
+                <div style="margin-bottom: 3.5rem">
+                    <input style="float: left" type="text" id="search-input" aria-label="tabel filter textveld" @input=${(event) => this.dashboardController.searchFilterTable(event)} placeholder="Zoeken">
+                    <button style="float: right" aria-label="reparatiekaart aanmaken" @click="${() => window.location.assign('../views/repair-card.html')}">Reparatiekaart Aanmaken</button>
                 </div>
                 <table id="repair-table" aria-label="repair tabel">
                     <thead>
