@@ -19,8 +19,19 @@ export class DashboardController {
   changeRepairStatus(repair, status) {
     const changedRepair = repair;
     changedRepair.status = status;
-    if (status === this.Status.Voltooid) {
-      changedRepair.datetimecompleted = { date: new Date().toLocaleDateString().toString().replaceAll('/', '-'), time: new Date().toLocaleTimeString().substring(0, 5) };
+    switch (status) {
+      case this.Status.InBehandeling:
+        changedRepair.datetimestarted = {
+          date: new Date().toLocaleDateString().toString().replaceAll('/', '-'), time: new Date().toLocaleTimeString().substring(0, 5),
+        };
+        break;
+      case this.Status.Voltooid:
+        changedRepair.datetimecompleted = {
+          date: new Date().toLocaleDateString().toString().replaceAll('/', '-'), time: new Date().toLocaleTimeString().substring(0, 5),
+        };
+        break;
+      default:
+        break;
     }
     storageService.replaceRepair(repair);
     this.updateRepairList();

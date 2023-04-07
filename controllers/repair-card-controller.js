@@ -9,7 +9,6 @@ export class RepairCardController {
   }
 
   addRepairCard() {
-    this.repair.datetimestarted = { date: new Date().toLocaleDateString().toString().replaceAll('/', '-'), time: new Date().toLocaleTimeString().substring(0, 5) };
     storageService.setRepairInLocalStorage(this.repair);
     window.location.assign('../../index.html');
   }
