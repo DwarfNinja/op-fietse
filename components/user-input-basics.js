@@ -48,7 +48,7 @@ export class UserInputBasics extends LitElement {
       </div>
       <div class="input-container">
         <label aria-label="phone-input">Telefoon Nummer:</label>
-        <input class="input-field" placeholder="Telefoon Nummer" required @input="${(event) => { this.phonenumber = event.target.value; this.onInput(event); }}">
+        <input class="input-field" placeholder="Telefoon Nummer" type="number" required @input="${(event) => { this.phonenumber = event.target.value; this.onInput(event); }}">
       </div>
     `;
   }

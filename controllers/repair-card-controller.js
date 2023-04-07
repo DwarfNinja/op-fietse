@@ -8,19 +8,25 @@ export class RepairCardController {
     host.addController(this);
   }
 
-  fieldsAreVerified() {
+  verifyFields() {
     const { repair } = this.host;
-    return (repair.basics.name !== '' || repair.basics.emailadres !== ''
+    if (Number.isNaN(repair.basics.phonenumber)) {
+      alert('Het telefoon nummer is geen geldig nummer!');
+      return false;
+    }
+    if (repair.basics.name !== '' || repair.basics.emailadres !== ''
         || repair.basics.phonenumber !== '' || repair.timeIndication !== 0
-        || repair.description !== '');
+        || repair.description !== '') {
+      return true;
+    }
+    alert('Nog niet alle velden zijn ingevuld!');
+    return false;
   }
 
   addRepairCard() {
-    if (this.fieldsAreVerified()) {
+    if (this.verifyFields()) {
       storageService.setRepairInLocalStorage(this.host.repair);
       window.location.assign('../../index.html');
-    } else {
-      alert('Nog niet alle velden zijn ingevuld!');
     }
   }
 
@@ -34,10 +40,8 @@ export class RepairCardController {
   }
 
   printRepairCard() {
-    if (this.fieldsAreVerified()) {
+    if (this.verifyFields()) {
       window.print();
-    } else {
-      alert('Nog niet alle velden zijn ingevuld!');
     }
   }
 }
