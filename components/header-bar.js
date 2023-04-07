@@ -25,6 +25,10 @@ export class HeaderBar extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.repairList = storageService.getRepairsFromLocalStorage();
+    this.setTotalRepairTime();
+  }
+
+  setTotalRepairTime() {
     let minutes = 0;
     this.repairList.forEach((repair) => { minutes += parseInt(repair.timeIndication, 10); });
     this.totalTimeIndication = utilsService.convertMinutesToTime(minutes);
