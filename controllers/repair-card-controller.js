@@ -1,3 +1,4 @@
+import { Router } from '@vaadin/router';
 import { storageService, utilsService } from '../services';
 
 export class RepairCardController {
@@ -30,7 +31,7 @@ export class RepairCardController {
   addRepairCard() {
     if (this.verifyFields()) {
       storageService.setRepairInLocalStorage(this.host.repair);
-      window.location.assign('../../index.html');
+      Router.go('/');
     }
   }
 
