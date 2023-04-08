@@ -113,10 +113,11 @@ export class Dashboard extends LitElement {
                         <th aria-label="kopstuk datum tijd voltooid">Datum/Tijd Voltooid</th>
                         <th aria-label="kopstuk tijds indicatie">Tijds Indicatie</th>
                         <th aria-label="kopstuk status">Status</th>
-                        <th aria-label="kopstuk actie">Actie</th>
+                        <th aria-label="kopstuk actie">Inzien</th>
+                        <th aria-label="kopstuk actie">Status Actie</th>
                     </tr>
                     </thead>
-                    <tr class="group-label"><th colspan="7">Te Doen</th></tr>
+                    <tr class="group-label"><th colspan="8">Te Doen</th></tr>
                     <tbody class="repair-table-body" aria-label="repair tabel body">
                     ${this.repairList ? this.dashboardController.getFilteredTable(this.dashboardController.Status.TeDoen).map((repair) => html`
                         <tr>
@@ -126,11 +127,12 @@ export class Dashboard extends LitElement {
                             <td aria-label="datum voltooid">${repair.datetimecompleted.date} ${repair.datetimecompleted.time}</td>
                             <td aria-label="tijds indicatie">${repair.timeIndication}min</td>
                             <td aria-label="status ${repair.status}">${repair.status}</td>
+                            <td><button @click="${() => this.dashboardController.openRepairCard(repair)}" style="width: 6rem">Open</button></td>
                             ${this.dashboardController.getButton(repair)}
                         </tr>
                     `) : nothing}
                     </tbody>
-                    <tr class="group-label"><th colspan="7">In Behandeling</th></tr>
+                    <tr class="group-label"><th colspan="8">In Behandeling</th></tr>
                     <tbody class="repair-table-body" aria-label="repair tabel body">
                     ${this.repairList ? this.dashboardController.getFilteredTable(this.dashboardController.Status.InBehandeling).map((repair) => html`
                         <tr>
@@ -140,11 +142,12 @@ export class Dashboard extends LitElement {
                             <td aria-label="datum voltooid">${repair.datetimecompleted.date} ${repair.datetimecompleted.time}</td>
                             <td aria-label="tijds indicatie">${repair.timeIndication}min</td>
                             <td aria-label="status ${repair.status}">${repair.status}</td>
+                            <td><button @click="${() => this.dashboardController.openRepairCard(repair)}" style="width: 6rem">Open</button></td>
                             ${this.dashboardController.getButton(repair)}
                         </tr>
                     `) : nothing}
                     </tbody>
-                    <tr class="group-label"><th colspan="7">Voltooid</th></tr>
+                    <tr class="group-label"><th colspan="8">Voltooid</th></tr>
                     <tbody class="repair-table-body" aria-label="repair tabel body">
                     ${this.repairList ? this.dashboardController.getFilteredTable(this.dashboardController.Status.Voltooid).map((repair) => html`
                         <tr>
@@ -154,6 +157,7 @@ export class Dashboard extends LitElement {
                             <td aria-label="datum voltooid">${repair.datetimecompleted.date} ${repair.datetimecompleted.time}</td>
                             <td aria-label="tijds indicatie">${repair.timeIndication}min</td>
                             <td aria-label="status ${repair.status}">${repair.status}</td>
+                            <td><button @click="${() => this.dashboardController.openRepairCard(repair)}" style="width: 6rem">Open</button></td>
                             ${this.dashboardController.getButton(repair)}
                         </tr>
                     `) : nothing}

@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { storageService } from '../services';
 
 export class UserInputBasics extends LitElement {
   static get styles() {
@@ -25,9 +26,23 @@ export class UserInputBasics extends LitElement {
 
   constructor() {
     super();
+    if (this.repairOpened()) {
+      return;
+    }
     this.name = '';
     this.emailadres = '';
     this.phonenumber = '';
+  }
+
+  repairOpened() {
+    if (storageService.getTempRepairLocalStorage() !== null) {
+      const tempRepair = storageService.getTempRepairLocalStorage();
+      this.name = tempRepair.basics.name;
+      this.emailadres = tempRepair.basics.emailadres;
+      this.phonenumber = tempRepair.basics.phonenumber;
+      return true;
+    }
+    return false;
   }
 
   onInput() {
@@ -40,15 +55,15 @@ export class UserInputBasics extends LitElement {
     return html`
       <div class="input-container">
         <label aria-label="username-input">Naam:</label>
-        <input class="input-field" placeholder="Naam" required @input="${(event) => { this.name = event.target.value; this.onInput(event); }}">
+        <input class="input-field" placeholder="Naam" value="${this.name}" required @input="${(event) => { this.name = event.target.value; this.onInput(event); }}">
       </div>
       <div class="input-container">
         <label aria-label="email-address-input">Emailadres:</label>
-        <input class="input-field" placeholder="Emailadres" required @input="${(event) => { this.emailadres = event.target.value; this.onInput(event); }}">
+        <input class="input-field" placeholder="Emailadres" value="${this.emailadres}" required @input="${(event) => { this.emailadres = event.target.value; this.onInput(event); }}">
       </div>
       <div class="input-container">
         <label aria-label="phone-input">Telefoon Nummer:</label>
-        <input class="input-field" placeholder="Telefoon Nummer" type="number" required @input="${(event) => { this.phonenumber = event.target.value; this.onInput(event); }}">
+        <input class="input-field" placeholder="Telefoon Nummer" value="${this.phonenumber}" required @input="${(event) => { this.phonenumber = event.target.value; this.onInput(event); }}">
       </div>
     `;
   }

@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { Router } from '@vaadin/router';
 import { storageService } from '../services';
 
 export class DashboardController {
@@ -14,6 +15,11 @@ export class DashboardController {
   constructor(host) {
     this.host = host;
     host.addController(this);
+  }
+
+  openRepairCard(repair) {
+    storageService.saveTempRepairLocalStorage(repair);
+    Router.go('/repaircard');
   }
 
   changeRepairStatus(repair, status) {
