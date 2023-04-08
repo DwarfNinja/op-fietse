@@ -7,15 +7,14 @@
     <title>OpFietse</title>
     <style>
     </style>
-    <script src="./app.js" type="module">
-    </script>
+    <script type="module" src="router.js"></script>
+    <script type="module" src="my-app.js"></script>
 </head>
-<header>
-    <header-bar></header-bar>
-</header>
+
 <body>
-    <main>
-        <dashboard-view></dashboard-view>
-    </main>
+<main>
+    <div id="outlet"></div>
+    <my-app></my-app>
+</main>
 </body>
 </html>

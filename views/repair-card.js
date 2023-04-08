@@ -5,6 +5,7 @@ import '../components/datetime-fields';
 import '../components/task-description';
 import '../components/time-indication';
 import { RepairCardController } from '../controllers/repair-card-controller';
+import {Router} from "@vaadin/router";
 
 class repairCard extends LitElement {
   static get styles() {
@@ -103,7 +104,7 @@ class repairCard extends LitElement {
           <task-description @description-changed="${(event) => { this.repair.description = event.detail; }}"></task-description>
         </form>
         <div id="button-container" class="hide-on-print">
-          <button @click="${() => window.location.assign('../../index.html')}">Dashboard</button>
+          <button @click="${() => Router.go('/')}">Dashboard</button>
           <button @click="${() => this.repairCardController.addRepairCard()}">Toevoegen</button>
           <button @click="${() => this.repairCardController.printRepairCard()}">Afdrukken</button>
         </div>
