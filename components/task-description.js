@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import {storageService} from "../services";
 
 class TaskDescription extends LitElement {
   static get styles() {
@@ -23,7 +24,19 @@ class TaskDescription extends LitElement {
 
   constructor() {
     super();
+    if (this.repairOpened()) {
+      return;
+    }
     this.description = '';
+  }
+
+  repairOpened() {
+    if (storageService.getTempRepairLocalStorage() !== null) {
+      const tempRepair = storageService.getTempRepairLocalStorage();
+      this.description = tempRepair.description;
+      return true;
+    }
+    return false;
   }
 
   onInput() {
@@ -36,7 +49,7 @@ class TaskDescription extends LitElement {
     return html`
       <div class="input-container">
         <label>Opdracht Beschrijving:</label>
-        <textarea id="description" placeholder="Opdracht Beschrijving" rows="4" cols="40" @input="${(event) => { this.description = event.target.value; this.onInput(event); }}"></textarea>
+        <textarea id="description" placeholder="Opdracht Beschrijving" rows="4" cols="40" @input="${(event) => { this.description = event.target.value; this.onInput(event); }}">${this.description}</textarea>
       </div>
     `;
   }

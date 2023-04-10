@@ -1,4 +1,5 @@
 import { html } from 'lit';
+import { Router } from '@vaadin/router';
 import { storageService } from '../services';
 import { store, updateRepairList } from '../redux/store';
 
@@ -15,6 +16,11 @@ export class DashboardController {
   constructor(host) {
     this.host = host;
     host.addController(this);
+  }
+
+  openRepairCard(repair) {
+    storageService.saveTempRepairLocalStorage(repair);
+    Router.go('/repaircard');
   }
 
   changeRepairStatus(repair, status) {
@@ -52,19 +58,28 @@ export class DashboardController {
       case this.Status.InBehandeling:
         return html`<td><button @click="${() => this.changeRepairStatus(repair, this.Status.Voltooid)}" style="width: 6rem">Voltooi</button></td>`;
       case this.Status.Voltooid:
-        return html`<td><button @click="${() => this.finishRepair(repair)}" style="width: 6rem">Betaald</button></td>`;
+        return html`<td><button @click="${() => {
+          if (confirm('Wilt u een email sturen naar de klant?')) {
+            window.open(`mailto:${repair.basics.emailadres}?subject=Info Reparatie: ID-${repair.id}&body=Beste ${repair.basics.name},%0D%0AUw reparatie is voltooid %0D%0ADatum en tijd voltooid: ${repair.datetimecompleted.date.toString()}' '${repair.datetimecompleted.time.toString()} %0D%0ABeschrijving van de uitgevoerde reparatie: ${repair.description}`);
+          }
+          this.finishRepair(repair);
+        }}" style="width: 6rem">Betaald</button></td>`;
       default:
         return html`<td><button @click="${() => this.changeRepairStatus(repair, this.Status.InBehandeling)}" style="width: 6rem">Start</button></td>`;
     }
   }
 
   getFilteredTable(filter) {
-    return this.host.repairList.filter((repair) => repair.status === filter);
+    const { repairList } = this.host;
+    if (repairList.length === 0) {
+      return repairList;
+    }
+    return repairList.filter((repair) => repair.status === filter);
   }
 
   searchFilterTable(event) {
     const filter = event.target.value.toUpperCase();
-    const tables = this.host.shadowRoot.querySelectorAll('.product-table-body');
+    const tables = this.host.shadowRoot.querySelectorAll('.repair-table-body');
 
     tables.forEach((table) => {
       const tr = table.getElementsByTagName('tr');

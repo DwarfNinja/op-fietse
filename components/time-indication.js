@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import {storageService} from "../services";
 
 export class TimeIndication extends LitElement {
   static get styles() {
@@ -23,7 +24,19 @@ export class TimeIndication extends LitElement {
 
   constructor() {
     super();
+    if (this.repairOpened()) {
+      return;
+    }
     this.timeIndication = 0;
+  }
+
+  repairOpened() {
+    if (storageService.getTempRepairLocalStorage() !== null) {
+      const tempRepair = storageService.getTempRepairLocalStorage();
+      this.timeIndication = tempRepair.timeIndication;
+      return true;
+    }
+    return false;
   }
 
   onInput() {
@@ -36,7 +49,7 @@ export class TimeIndication extends LitElement {
     return html`
       <div class="input-container">
         <label aria-label="time-indication">Tijds Indicatie In Minuten:</label>
-        <input class="input-field" placeholder="Tijds Indicatie In Minuten" type="number" pattern="[0-9]*" required @input="${(event) => { this.timeIndication = event.target.value; this.onInput(event); }}">
+        <input class="input-field" placeholder="Tijds Indicatie In Minuten" type="number" pattern="[0-9]*" value="${this.timeIndication}" required @input="${(event) => { this.timeIndication = event.target.value; this.onInput(event); }}">
       </div>
     `;
   }

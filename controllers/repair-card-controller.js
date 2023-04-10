@@ -1,3 +1,4 @@
+import { Router } from '@vaadin/router';
 import { storageService, utilsService } from '../services';
 
 export class RepairCardController {
@@ -8,9 +9,30 @@ export class RepairCardController {
     host.addController(this);
   }
 
+  verifyFields() {
+    const { repair } = this.host;
+    if (Number.isNaN(repair.basics.phonenumber)) {
+      alert('Het telefoon nummer is geen geldig nummer!');
+      return false;
+    }
+    if (Number.isNaN(repair.timeIndication)) {
+      alert('De tijds indicatie is geen geldige tijd in minuten!');
+      return false;
+    }
+    if (repair.basics.name !== '' || repair.basics.emailadres !== ''
+        || repair.basics.phonenumber !== '' || repair.timeIndication !== 0
+        || repair.description !== '') {
+      return true;
+    }
+    alert('Nog niet alle velden zijn ingevuld!');
+    return false;
+  }
+
   addRepairCard() {
-    storageService.setRepairInLocalStorage(this.repair);
-    window.location.assign('../../index.html');
+    if (this.verifyFields()) {
+      storageService.setRepairInLocalStorage(this.host.repair);
+      Router.go('/');
+    }
   }
 
   getNewId() {
@@ -23,6 +45,8 @@ export class RepairCardController {
   }
 
   printRepairCard() {
-    window.print();
+    if (this.verifyFields()) {
+      window.print();
+    }
   }
 }
