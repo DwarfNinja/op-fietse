@@ -40,9 +40,6 @@ export class DashboardController {
   finishRepair(repair) {
     store.dispatch(removeRepairFromRepairList(repair));
   }
-  updateRepairList() {
-    store.dispatch(updateRepairList());
-  }
 
   getButton(repair) {
     switch (repair.status) {
