@@ -9,12 +9,20 @@
     "start:watch": "web-dev-server --open --node-resolve --watch"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
+    "@vaadin/router": "^1.7.5",
     "lit": "^2.6.1",
-    "lit-element": "^3.2.2"
+    "lit-element": "^3.2.2",
+    "nanoid": "^4.0.2",
+    "pwa-helpers": "^0.9.1",
+    "redux": "^4.2.1",
+    "reselect": "^4.1.7"
   },
   "devDependencies": {
     "@web/dev-server": "^0.1.35",
-    "@web/test-runner": "^0.15.0"
+    "@web/test-runner": "^0.15.0",
+    "eslint": "^8.36.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.27.5"
   }
 }
-

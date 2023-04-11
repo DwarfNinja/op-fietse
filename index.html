@@ -6,21 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpFietse</title>
     <style>
-        repair-card{
-            display: flex;
-            position: absolute;
-            right: 50%;
-            top: 10%;
-        }
     </style>
-    <script>
-        import('./repair-card.js');
-    </script>
+    <script src="./extra/windowprocess.js"></script>
+    <script type="module" src="router.js"></script>
+    <script type="module" src="my-app.js"></script>
 </head>
 
 <body>
-    <main>
-        <repair-card></repair-card>
-    </main>
+<main>
+    <div id="outlet"></div>
+</main>
 </body>
 </html>
