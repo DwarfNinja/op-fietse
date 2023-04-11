@@ -10,6 +10,10 @@ const repairListSlice = createSlice({
     updateRepairList: (state) => {
       state.repairList = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
     },
+    setRepairInRepairList: (state, action) => {
+      storageService.setRepairInLocalStorage(action.payload);
+      state.repairList = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
+    },
   },
 });
 

@@ -9,7 +9,7 @@ import { Router } from '@vaadin/router';
 import { RepairCardController } from '../controllers/repair-card-controller';
 import { storageService } from '../services';
 
-class repairCard extends LitElement {
+export class RepairCard extends LitElement {
   static get styles() {
     return css`
       h2 {
@@ -55,6 +55,13 @@ class repairCard extends LitElement {
 
   repairCardController = new RepairCardController(this);
 
+  static Status = {
+    TeDoen: 'Te Doen',
+    InBehandeling: 'In Behandeling',
+    Voltooid: 'Voltooid',
+    Betaald: 'Betaald',
+  };
+
   static get properties() {
     return {
       repair: {
@@ -92,7 +99,7 @@ class repairCard extends LitElement {
       },
       description: '',
       timeIndication: 0,
-      status: '',
+      status: RepairCard.Status.TeDoen,
     };
 
     this.repairOpened = this.isRepairOpened();
@@ -138,4 +145,4 @@ class repairCard extends LitElement {
   }
 }
 
-customElements.define('repair-card', repairCard);
+customElements.define('repair-card', RepairCard);
