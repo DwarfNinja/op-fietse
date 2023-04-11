@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { Router } from '@vaadin/router';
 import { storageService } from '../services';
-import { store, changeRepairStatus, updateRepairList } from '../redux/store';
+import {store, changeRepairStatus, updateRepairList, removeRepairFromRepairList} from '../redux/store';
 import { RepairCard } from '../views/repair-card';
 
 export class DashboardController {
@@ -38,10 +38,8 @@ export class DashboardController {
   }
 
   finishRepair(repair) {
-    storageService.deleteRepairInLocalStorage(repair);
-    this.updateRepairList();
+    store.dispatch(removeRepairFromRepairList(repair));
   }
-
   updateRepairList() {
     store.dispatch(updateRepairList());
   }
