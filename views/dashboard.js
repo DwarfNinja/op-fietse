@@ -2,12 +2,13 @@ import {
   css, html, LitElement, nothing,
 } from 'lit';
 import { Router } from '@vaadin/router';
+import { connect } from 'pwa-helpers';
 import { DashboardController } from '../controllers/dashboard-controller';
-import store from '../redux/store';
-import { storageService } from '../services';
+import { store } from '../redux/store';
+import { RepairCard } from './repair-card';
 import { setRepairList } from '../redux/actions';
 
-export class Dashboard extends LitElement {
+export class Dashboard extends connect(store)(LitElement) {
   static get styles() {
     return css`
           #center-container {
@@ -94,9 +95,12 @@ export class Dashboard extends LitElement {
     };
   }
 
+  stateChanged(state) {
+    this.repairList = state.repairList.value;
+  }
+
   connectedCallback() {
     super.connectedCallback();
-    this.dashboardController.updateRepairList();
   }
 
   render() {

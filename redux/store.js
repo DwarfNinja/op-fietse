@@ -4,7 +4,7 @@ import { storageService } from '../services';
 const repairListSlice = createSlice({
   name: 'repairList',
   initialState: {
-    value: [],
+    value: storageService.getRepairsFromLocalStorage(),
   },
   reducers: {
     updateRepairList: (state) => {
@@ -17,6 +17,8 @@ export const { updateRepairList } = repairListSlice.actions;
 
 export const store = configureStore(
   {
-    reducer: repairListSlice.reducer,
+    reducer: {
+      repairList: repairListSlice.reducer,
+    },
   },
 );
