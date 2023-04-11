@@ -100,7 +100,7 @@ export class Dashboard extends connect(store)(LitElement) {
 
   connectedCallback() {
     super.connectedCallback();
-    this.dashboardController.updateRepairList();
+    this.repairList = store.getState().repairList.value;
   }
 
   render() {

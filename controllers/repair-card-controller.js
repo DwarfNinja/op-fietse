@@ -1,5 +1,6 @@
 import { Router } from '@vaadin/router';
-import { storageService, utilsService } from '../services';
+import { utilsService } from '../services';
+import { setRepairInRepairList, store } from '../redux/store';
 
 export class RepairCardController {
   host;
@@ -30,14 +31,14 @@ export class RepairCardController {
 
   addRepairCard() {
     if (this.verifyFields()) {
-      storageService.setRepairInLocalStorage(this.host.repair);
+      store.dispatch(setRepairInRepairList(this.host.repair));
       Router.go('/');
     }
   }
 
   getNewId() {
     const ids = [];
-    const repairList = storageService.getRepairsFromLocalStorage();
+    const repairList = store.getState().repairList.value;
     repairList.forEach((repair) => {
       ids.push(repair.id);
     });

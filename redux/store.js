@@ -1,28 +1,7 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { storageService } from '../services';
+import { configureStore } from '@reduxjs/toolkit';
+import { repairListSlice } from './repairlist_slice';
 
-const repairListSlice = createSlice({
-  name: 'repairList',
-  initialState: {
-    value: storageService.getRepairsFromLocalStorage(),
-  },
-  reducers: {
-    updateRepairList: (state) => {
-      state.value = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
-    },
-    setRepairInRepairList: (state, action) => {
-      storageService.setRepairInLocalStorage(action.payload);
-      state.value = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
-    },
-    changeRepairStatus: (state, action) => {
-      const changedRepair = action.payload;
-      storageService.replaceRepair(changedRepair);
-      state.value = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
-    },
-  },
-});
-
-export const { updateRepairList, changeRepairStatus } = repairListSlice.actions;
+export const { updateRepairList, setRepairInRepairList, removeRepairFromRepairList, changeRepairStatus } = repairListSlice.actions;
 
 export const store = configureStore(
   {
