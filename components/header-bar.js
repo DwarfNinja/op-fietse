@@ -1,7 +1,9 @@
 import { LitElement, html, css } from 'lit';
-import { storageService, utilsService } from '../services';
+import { connect } from 'pwa-helpers';
+import { utilsService } from '../services';
+import { store } from '../redux/store';
 
-export class HeaderBar extends LitElement {
+export class HeaderBar extends connect(store)(LitElement) {
   static get styles() {
     return css`
       h1 {
@@ -28,9 +30,14 @@ export class HeaderBar extends LitElement {
     };
   }
 
+  stateChanged(state) {
+    this.repairList = state.repairList.value;
+    this.setTotalRepairTime();
+  }
+
   connectedCallback() {
     super.connectedCallback();
-    this.repairList = storageService.getRepairsFromLocalStorage();
+    this.repairList = store.getState().repairList.value;
     this.setTotalRepairTime();
   }
 
