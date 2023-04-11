@@ -8,16 +8,21 @@ const repairListSlice = createSlice({
   },
   reducers: {
     updateRepairList: (state) => {
-      state.repairList = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
+      state.value = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
     },
     setRepairInRepairList: (state, action) => {
       storageService.setRepairInLocalStorage(action.payload);
-      state.repairList = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
+      state.value = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
+    },
+    changeRepairStatus: (state, action) => {
+      const changedRepair = action.payload;
+      storageService.replaceRepair(changedRepair);
+      state.value = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
     },
   },
 });
 
-export const { updateRepairList } = repairListSlice.actions;
+export const { updateRepairList, changeRepairStatus } = repairListSlice.actions;
 
 export const store = configureStore(
   {

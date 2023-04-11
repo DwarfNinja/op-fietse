@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { Router } from '@vaadin/router';
 import { storageService } from '../services';
-import { store, updateRepairList } from '../redux/store';
+import { store, changeRepairStatus, updateRepairList } from '../redux/store';
 import { RepairCard } from '../views/repair-card';
 
 export class DashboardController {
@@ -18,9 +18,9 @@ export class DashboardController {
   }
 
   changeRepairStatus(repair, status) {
-    const changedRepair = repair;
+    const changedRepair = JSON.parse(JSON.stringify(repair));
     changedRepair.status = status;
-    switch (status) {
+    switch (changedRepair.status) {
       case RepairCard.Status.InBehandeling:
         changedRepair.datetimestarted = {
           date: new Date().toLocaleDateString().toString().replaceAll('/', '-'), time: new Date().toLocaleTimeString().substring(0, 5),
@@ -34,8 +34,7 @@ export class DashboardController {
       default:
         break;
     }
-    storageService.replaceRepair(repair);
-    this.updateRepairList();
+    store.dispatch(changeRepairStatus(changedRepair));
   }
 
   finishRepair(repair) {

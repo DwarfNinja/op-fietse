@@ -4,8 +4,8 @@ import {
 import { Router } from '@vaadin/router';
 import { connect } from 'pwa-helpers';
 import { DashboardController } from '../controllers/dashboard-controller';
-import { store } from '../redux/store';
 import { RepairCard } from './repair-card';
+import { store } from '../redux/store';
 
 export class Dashboard extends connect(store)(LitElement) {
   static get styles() {
@@ -100,6 +100,7 @@ export class Dashboard extends connect(store)(LitElement) {
 
   connectedCallback() {
     super.connectedCallback();
+    this.dashboardController.updateRepairList();
   }
 
   render() {
