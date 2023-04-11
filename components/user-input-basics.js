@@ -54,16 +54,16 @@ export class UserInputBasics extends LitElement {
   render() {
     return html`
       <div class="input-container">
-        <label aria-label="username-input">Naam:</label>
-        <input class="input-field" placeholder="Naam" value="${this.name}" required @input="${(event) => { this.name = event.target.value; this.onInput(event); }}">
+        <label aria-label="username-input" for="name-input-field">Naam:</label>
+        <input id="name-input-field" class="input-field" placeholder="Naam" value="${this.name}" required @input="${(event) => { this.name = event.target.value; this.onInput(event); }}">
       </div>
       <div class="input-container">
-        <label aria-label="email-address-input">Emailadres:</label>
-        <input class="input-field" placeholder="Emailadres" value="${this.emailadres}" required @input="${(event) => { this.emailadres = event.target.value; this.onInput(event); }}">
+        <label aria-label="email-address-input" for="emailadress-input-field">Emailadres:</label>
+        <input id="emailadress-input-field" class="input-field" placeholder="Emailadres" value="${this.emailadres}" required @input="${(event) => { this.emailadres = event.target.value; this.onInput(event); }}">
       </div>
       <div class="input-container">
-        <label aria-label="phone-input">Telefoon Nummer:</label>
-        <input class="input-field" placeholder="Telefoon Nummer" value="${this.phonenumber}" required @input="${(event) => { this.phonenumber = event.target.value; this.onInput(event); }}">
+        <label aria-label="phone-input" for="phonenumber-input-field">Telefoon Nummer:</label>
+        <input id="phonenumber-input-field" class="input-field" placeholder="Telefoon Nummer" value="${this.phonenumber}" required @input="${(event) => { this.phonenumber = event.target.value; this.onInput(event); }}">
       </div>
     `;
   }

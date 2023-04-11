@@ -48,8 +48,8 @@ export class TimeIndication extends LitElement {
   render() {
     return html`
       <div class="input-container">
-        <label aria-label="time-indication">Tijds Indicatie In Minuten:</label>
-        <input class="input-field" placeholder="Tijds Indicatie In Minuten" type="number" pattern="[0-9]*" value="${this.timeIndication}" required @input="${(event) => { this.timeIndication = event.target.value; this.onInput(event); }}">
+        <label aria-label="time-indication" for="time-indication-input-field">Tijds Indicatie In Minuten:</label>
+        <input id="time-indication-input-field" class="input-field" placeholder="Tijds Indicatie In Minuten" type="number" pattern="[0-9]*" value="${this.timeIndication}" required @input="${(event) => { this.timeIndication = event.target.value; this.onInput(event); }}">
       </div>
     `;
   }
