@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import {storageService} from "../services";
+import { storageService } from '../services';
 
 class TaskDescription extends LitElement {
   static get styles() {
@@ -48,7 +48,7 @@ class TaskDescription extends LitElement {
   render() {
     return html`
       <div class="input-container">
-        <label>Opdracht Beschrijving:</label>
+        <label for="description">Opdracht Beschrijving:</label>
         <textarea id="description" placeholder="Opdracht Beschrijving" rows="4" cols="40" @input="${(event) => { this.description = event.target.value; this.onInput(event); }}">${this.description}</textarea>
       </div>
     `;

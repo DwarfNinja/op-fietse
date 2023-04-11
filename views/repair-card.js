@@ -120,7 +120,7 @@ export class RepairCard extends LitElement {
     return html`
       <div id="center-container">
         <h1>Incheck Reparatie | ID: ${this.repair.id}</h1>
-        <h2>${this.repairOpened ? `Status: ${this.repair.status}` : nothing}</h2>
+        ${this.repairOpened ? html`<h2>Status: ${this.repair.status}</h2>` : nothing}
         <form id="repairCardForm">
           <user-input-basics @user-input-basics-changed="${(event) => { this.repair.basics = event.detail; }}"></user-input-basics>
           <datetime-fields @datetime-created-changed="${(event) => { this.repair.datetimecreated = event.detail; }}"></datetime-fields>

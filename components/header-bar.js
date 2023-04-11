@@ -4,6 +4,12 @@ import { storageService, utilsService } from '../services';
 export class HeaderBar extends LitElement {
   static get styles() {
     return css`
+      h1 {
+        font-size: 24px;
+      }
+      h2 {
+        font-size: 20px;
+      }
       #header-bar {
         display: flex; 
         justify-content: center; 
@@ -38,8 +44,8 @@ export class HeaderBar extends LitElement {
     return html`
             <div id="header-bar">
                 <div>
-                    <h3 style="color: white;">Totale tijdsindicatie reparaties:</h3>
-                    <h3 class="header-menu-item" style="margin: 2rem auto; padding: 0.5rem; justify-self: center; color: black; background-color: white; max-width: 5rem; border-radius: 20px; text-align: center;">${this.totalTimeIndication}</h3>
+                    <h1 style="color: white;">Totale tijdsindicatie reparaties:</h1>
+                    <h2 class="header-menu-item" style="margin: 2rem auto; padding: 0.5rem; justify-self: center; color: black; background-color: white; max-width: 5rem; border-radius: 20px; text-align: center;">${this.totalTimeIndication}</h2>
                 </div>
             </div>
     `;
