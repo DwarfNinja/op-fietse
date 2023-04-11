@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import {storageService} from "../services";
+import { storageService } from '../services';
 
 export class TimeIndication extends LitElement {
   static get styles() {
@@ -31,8 +31,8 @@ export class TimeIndication extends LitElement {
   }
 
   repairOpened() {
-    if (storageService.getTempRepairLocalStorage() !== null) {
-      const tempRepair = storageService.getTempRepairLocalStorage();
+    if (storageService.getTempRepair() !== null) {
+      const tempRepair = storageService.getTempRepair();
       this.timeIndication = tempRepair.timeIndication;
       return true;
     }

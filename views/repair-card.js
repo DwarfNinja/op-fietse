@@ -110,8 +110,8 @@ export class RepairCard extends LitElement {
   }
 
   isRepairOpened() {
-    if (storageService.getTempRepairLocalStorage() !== null) {
-      this.repair.status = storageService.getTempRepairLocalStorage().status;
+    if (storageService.getTempRepair() !== null) {
+      this.repair.status = storageService.getTempRepair().status;
       return true;
     }
   }
@@ -129,7 +129,7 @@ export class RepairCard extends LitElement {
         </form>
         <div id="button-container" class="hide-on-print">
           ${this.repairOpened
-    ? html`<button @click="${() => { storageService.removeTempRepairLocalStorage(); Router.go('/'); }}">Terug</button>`
+    ? html`<button @click="${() => { storageService.removeTempRepair(); Router.go('/'); }}">Terug</button>`
     : html`<button @click="${() => Router.go('/')}">Dashboard</button>`}
           ${this.repairOpened ? nothing : html`<button @click="${() => this.repairCardController.addRepairCard()}">Toevoegen</button>`}
           <button @click="${() => this.repairCardController.printRepairCard()}">Afdrukken</button>

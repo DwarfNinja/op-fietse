@@ -35,8 +35,8 @@ export class UserInputBasics extends LitElement {
   }
 
   repairOpened() {
-    if (storageService.getTempRepairLocalStorage() !== null) {
-      const tempRepair = storageService.getTempRepairLocalStorage();
+    if (storageService.getTempRepair() !== null) {
+      const tempRepair = storageService.getTempRepair();
       this.name = tempRepair.basics.name;
       this.emailadres = tempRepair.basics.emailadres;
       this.phonenumber = tempRepair.basics.phonenumber;

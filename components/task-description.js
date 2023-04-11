@@ -31,8 +31,8 @@ class TaskDescription extends LitElement {
   }
 
   repairOpened() {
-    if (storageService.getTempRepairLocalStorage() !== null) {
-      const tempRepair = storageService.getTempRepairLocalStorage();
+    if (storageService.getTempRepair() !== null) {
+      const tempRepair = storageService.getTempRepair();
       this.description = tempRepair.description;
       return true;
     }

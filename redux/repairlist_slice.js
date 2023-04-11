@@ -4,24 +4,24 @@ import { storageService } from '../services';
 export const repairListSlice = createSlice({
   name: 'repairList',
   initialState: {
-    value: storageService.getRepairsFromLocalStorage(),
+    value: storageService.getRepairList(),
   },
   reducers: {
     updateRepairList: (state) => {
-      state.value = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
+      state.value = storageService.getRepairList().sort((a, b) => a.id > b.id);
     },
     setRepairInRepairList: (state, action) => {
-      storageService.setRepairInLocalStorage(action.payload);
-      state.value = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
+      storageService.addRepair(action.payload);
+      state.value = storageService.getRepairList().sort((a, b) => a.id > b.id);
     },
     removeRepairFromRepairList: (state, action) => {
-      storageService.deleteRepairInLocalStorage(action.payload);
-      state.value = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
+      storageService.deleteRepair(action.payload);
+      state.value = storageService.getRepairList().sort((a, b) => a.id > b.id);
     },
     changeRepairStatus: (state, action) => {
       const changedRepair = action.payload;
       storageService.replaceRepair(changedRepair);
-      state.value = storageService.getRepairsFromLocalStorage().sort((a, b) => a.id > b.id);
+      state.value = storageService.getRepairList().sort((a, b) => a.id > b.id);
     },
   },
 });

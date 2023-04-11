@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { Router } from '@vaadin/router';
 import { storageService } from '../services';
-import {store, changeRepairStatus, updateRepairList, removeRepairFromRepairList} from '../redux/store';
+import { store, changeRepairStatus, removeRepairFromRepairList } from '../redux/store';
 import { RepairCard } from '../views/repair-card';
 
 export class DashboardController {
@@ -13,7 +13,7 @@ export class DashboardController {
   }
 
   openRepairCard(repair) {
-    storageService.saveTempRepairLocalStorage(repair);
+    storageService.saveTempRepair(repair);
     Router.go('/repaircard');
   }
 
@@ -73,9 +73,9 @@ export class DashboardController {
       const tr = table.getElementsByTagName('tr');
       let found;
 
-      for (let i = 0; i < tr.length; i++) {
+      for (let i = 0; i < tr.length; i += 1) {
         const td = tr[i].getElementsByTagName('td');
-        for (let j = 0; j < td.length; j++) {
+        for (let j = 0; j < td.length; j += 1) {
           const txtValue = td[j].textContent || td[j].innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {
             found = true;
