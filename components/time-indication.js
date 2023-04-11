@@ -24,25 +24,24 @@ export class TimeIndication extends LitElement {
 
   constructor() {
     super();
-    if (this.repairOpened()) {
+    this.setTimeIndication();
+  }
+
+  setTimeIndication() {
+    if (storageService.tempRepairExists()) {
+      const tempRepair = storageService.getTempRepair();
+      this.timeIndication = tempRepair.timeIndication;
       return;
     }
     this.timeIndication = 0;
   }
 
-  repairOpened() {
-    if (storageService.getTempRepair() !== null) {
-      const tempRepair = storageService.getTempRepair();
-      this.timeIndication = tempRepair.timeIndication;
-      return true;
-    }
-    return false;
-  }
-
   onInput() {
-    this.dispatchEvent(new CustomEvent('time-indication-changed', {
-      detail: this.timeIndication,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('time-indication-changed', {
+        detail: this.timeIndication,
+      }),
+    );
   }
 
   render() {

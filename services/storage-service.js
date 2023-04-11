@@ -1,3 +1,5 @@
+import { storageService } from './index';
+
 export class StorageService {
   getRepairList() {
     return JSON.parse(localStorage.getItem('repairList')) ?? [];
@@ -33,6 +35,10 @@ export class StorageService {
 
   getTempRepair() {
     return JSON.parse(localStorage.getItem('tempRepair'));
+  }
+
+  tempRepairExists() {
+    return storageService.getTempRepair() !== null;
   }
 
   saveTempRepair(repair) {

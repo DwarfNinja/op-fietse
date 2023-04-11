@@ -24,25 +24,24 @@ class TaskDescription extends LitElement {
 
   constructor() {
     super();
-    if (this.repairOpened()) {
+    this.setDescription();
+  }
+
+  setDescription() {
+    if (storageService.tempRepairExists()) {
+      const tempRepair = storageService.getTempRepair();
+      this.description = tempRepair.description;
       return;
     }
     this.description = '';
   }
 
-  repairOpened() {
-    if (storageService.getTempRepair() !== null) {
-      const tempRepair = storageService.getTempRepair();
-      this.description = tempRepair.description;
-      return true;
-    }
-    return false;
-  }
-
   onInput() {
-    this.dispatchEvent(new CustomEvent('description-changed', {
-      detail: this.description,
-    }));
+    this.dispatchEvent(
+      new CustomEvent('description-changed', {
+        detail: this.description,
+      }),
+    );
   }
 
   render() {

@@ -1,3 +1,5 @@
+import { storageService } from '../services';
+
 export class DateTimeController {
   host;
 
@@ -7,6 +9,12 @@ export class DateTimeController {
   }
 
   setDateTime() {
+    if (storageService.tempRepairExists()) {
+      const tempRepair = storageService.getTempRepair();
+      this.host.date = tempRepair.datetimecreated.date;
+      this.host.time = tempRepair.datetimecreated.time;
+      return;
+    }
     this.host.date = new Date().toLocaleDateString().toString().replaceAll('/', '-');
     this.setTime();
     this.host.dispatchEvent(new CustomEvent('datetime-created-changed', {

@@ -102,17 +102,18 @@ export class RepairCard extends LitElement {
       status: RepairCard.Status.TeDoen,
     };
 
-    this.repairOpened = this.isRepairOpened();
+    this.setRepairIfOpened();
 
     window.addEventListener('afterprint', () => {
       this.printing = false;
     });
   }
 
-  isRepairOpened() {
-    if (storageService.getTempRepair() !== null) {
-      this.repair.status = storageService.getTempRepair().status;
-      return true;
+  setRepairIfOpened() {
+    if (storageService.tempRepairExists()) {
+      const tempRepair = storageService.getTempRepair();
+      this.repairOpened = true;
+      this.repair.status = tempRepair.status;
     }
   }
 

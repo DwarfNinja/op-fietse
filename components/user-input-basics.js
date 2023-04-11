@@ -26,23 +26,20 @@ export class UserInputBasics extends LitElement {
 
   constructor() {
     super();
-    if (this.repairOpened()) {
+    this.setUserBasics();
+  }
+
+  setUserBasics() {
+    if (storageService.tempRepairExists()) {
+      const tempRepair = storageService.getTempRepair();
+      this.name = tempRepair.basics.name;
+      this.emailadres = tempRepair.basics.emailadres;
+      this.phonenumber = tempRepair.basics.phonenumber;
       return;
     }
     this.name = '';
     this.emailadres = '';
     this.phonenumber = '';
-  }
-
-  repairOpened() {
-    if (storageService.getTempRepair() !== null) {
-      const tempRepair = storageService.getTempRepair();
-      this.name = tempRepair.basics.name;
-      this.emailadres = tempRepair.basics.emailadres;
-      this.phonenumber = tempRepair.basics.phonenumber;
-      return true;
-    }
-    return false;
   }
 
   onInput() {
