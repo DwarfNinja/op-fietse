@@ -9,9 +9,14 @@
     "start:watch": "web-dev-server --open --node-resolve --watch"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
     "@vaadin/router": "^1.7.5",
     "lit": "^2.6.1",
-    "lit-element": "^3.2.2"
+    "lit-element": "^3.2.2",
+    "nanoid": "^4.0.2",
+    "pwa-helpers": "^0.9.1",
+    "redux": "^4.2.1",
+    "reselect": "^4.1.7"
   },
   "devDependencies": {
     "@web/dev-server": "^0.1.35",

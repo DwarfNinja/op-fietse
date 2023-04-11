@@ -1,16 +1,11 @@
 import { html } from 'lit';
 import { Router } from '@vaadin/router';
 import { storageService } from '../services';
+import { store, changeRepairStatus, updateRepairList } from '../redux/store';
+import { RepairCard } from '../views/repair-card';
 
 export class DashboardController {
   host;
-
-  Status = {
-    TeDoen: 'Te Doen',
-    InBehandeling: 'In Behandeling',
-    Voltooid: 'Voltooid',
-    Betaald: 'Betaald',
-  };
 
   constructor(host) {
     this.host = host;
@@ -23,15 +18,15 @@ export class DashboardController {
   }
 
   changeRepairStatus(repair, status) {
-    const changedRepair = repair;
+    const changedRepair = JSON.parse(JSON.stringify(repair));
     changedRepair.status = status;
-    switch (status) {
-      case this.Status.InBehandeling:
+    switch (changedRepair.status) {
+      case RepairCard.Status.InBehandeling:
         changedRepair.datetimestarted = {
           date: new Date().toLocaleDateString().toString().replaceAll('/', '-'), time: new Date().toLocaleTimeString().substring(0, 5),
         };
         break;
-      case this.Status.Voltooid:
+      case RepairCard.Status.Voltooid:
         changedRepair.datetimecompleted = {
           date: new Date().toLocaleDateString().toString().replaceAll('/', '-'), time: new Date().toLocaleTimeString().substring(0, 5),
         };
@@ -39,8 +34,7 @@ export class DashboardController {
       default:
         break;
     }
-    storageService.replaceRepair(repair);
-    this.updateRepairList();
+    store.dispatch(changeRepairStatus(changedRepair));
   }
 
   finishRepair(repair) {
@@ -49,15 +43,14 @@ export class DashboardController {
   }
 
   updateRepairList() {
-    this.host.repairList = storageService.getRepairsFromLocalStorage()
-      .sort((a, b) => a.id > b.id);
+    store.dispatch(updateRepairList());
   }
 
   getButton(repair) {
     switch (repair.status) {
-      case this.Status.InBehandeling:
-        return html`<td><button @click="${() => this.changeRepairStatus(repair, this.Status.Voltooid)}" style="width: 6rem">Voltooi</button></td>`;
-      case this.Status.Voltooid:
+      case RepairCard.Status.InBehandeling:
+        return html`<td><button @click="${() => this.changeRepairStatus(repair, RepairCard.Status.Voltooid)}" style="width: 6rem">Voltooi</button></td>`;
+      case RepairCard.Status.Voltooid:
         return html`<td><button @click="${() => {
           if (confirm('Wilt u een email sturen naar de klant?')) {
             window.open(`mailto:${repair.basics.emailadres}?subject=Info Reparatie: ID-${repair.id}&body=Beste ${repair.basics.name},%0D%0AUw reparatie is voltooid %0D%0ADatum en tijd voltooid: ${repair.datetimecompleted.date.toString()}' '${repair.datetimecompleted.time.toString()} %0D%0ABeschrijving van de uitgevoerde reparatie: ${repair.description}`);
@@ -65,7 +58,7 @@ export class DashboardController {
           this.finishRepair(repair);
         }}" style="width: 6rem">Betaald</button></td>`;
       default:
-        return html`<td><button @click="${() => this.changeRepairStatus(repair, this.Status.InBehandeling)}" style="width: 6rem">Start</button></td>`;
+        return html`<td><button @click="${() => this.changeRepairStatus(repair, RepairCard.Status.InBehandeling)}" style="width: 6rem">Start</button></td>`;
     }
   }
 

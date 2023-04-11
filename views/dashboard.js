@@ -2,9 +2,12 @@ import {
   css, html, LitElement, nothing,
 } from 'lit';
 import { Router } from '@vaadin/router';
+import { connect } from 'pwa-helpers';
 import { DashboardController } from '../controllers/dashboard-controller';
+import { RepairCard } from './repair-card';
+import { store } from '../redux/store';
 
-export class Dashboard extends LitElement {
+export class Dashboard extends connect(store)(LitElement) {
   static get styles() {
     return css`
           #center-container {
@@ -91,6 +94,10 @@ export class Dashboard extends LitElement {
     };
   }
 
+  stateChanged(state) {
+    this.repairList = state.repairList.value;
+  }
+
   connectedCallback() {
     super.connectedCallback();
     this.dashboardController.updateRepairList();
@@ -119,7 +126,7 @@ export class Dashboard extends LitElement {
                     </thead>
                     <tr class="group-label"><th colspan="8">Te Doen</th></tr>
                     <tbody class="repair-table-body" aria-label="repair tabel body">
-                    ${this.repairList ? this.dashboardController.getFilteredTable(this.dashboardController.Status.TeDoen).map((repair) => html`
+                    ${this.repairList ? this.dashboardController.getFilteredTable(RepairCard.Status.TeDoen).map((repair) => html`
                         <tr>
                             <td aria-label="id ${repair.id}">${repair.id}</td>
                             <td aria-label="datum aangemaakt">${repair.datetimecreated.date} ${repair.datetimecreated.time}</td>
@@ -134,7 +141,7 @@ export class Dashboard extends LitElement {
                     </tbody>
                     <tr class="group-label"><th colspan="8">In Behandeling</th></tr>
                     <tbody class="repair-table-body" aria-label="repair tabel body">
-                    ${this.repairList ? this.dashboardController.getFilteredTable(this.dashboardController.Status.InBehandeling).map((repair) => html`
+                    ${this.repairList ? this.dashboardController.getFilteredTable(RepairCard.Status.InBehandeling).map((repair) => html`
                         <tr>
                             <td aria-label="id ${repair.id}">${repair.id}</td>
                             <td aria-label="datum aangemaakt">${repair.datetimecreated.date} ${repair.datetimecreated.time}</td>
@@ -149,7 +156,7 @@ export class Dashboard extends LitElement {
                     </tbody>
                     <tr class="group-label"><th colspan="8">Voltooid</th></tr>
                     <tbody class="repair-table-body" aria-label="repair tabel body">
-                    ${this.repairList ? this.dashboardController.getFilteredTable(this.dashboardController.Status.Voltooid).map((repair) => html`
+                    ${this.repairList ? this.dashboardController.getFilteredTable(RepairCard.Status.Voltooid).map((repair) => html`
                         <tr>
                             <td aria-label="id ${repair.id}">${repair.id}</td>
                             <td aria-label="datum aangemaakt">${repair.datetimecreated.date} ${repair.datetimecreated.time}</td>
